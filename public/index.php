@@ -1,22 +1,14 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php'; // Ensure Composer's autoloader is included
+require_once __DIR__ . '/config/bootstrap.php';
 
-use App\Upload\UploadHandler;
-use App\Validators\TtfFileValidator;
-use App\Storage\DiskFileStorage;
+use App\Controllers\UploadController;
 
-$requestUri = $_SERVER['REQUEST_URI'];
-$requestUri = strtok($requestUri, '?');
+$requestUri = strtok($_SERVER['REQUEST_URI'], '?');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (strpos($requestUri, '/api/upload') !== false) {
-        $fileValidator = new TtfFileValidator();
-        $fileStorage = new DiskFileStorage();
-        $uploadHandler = new UploadHandler($fileValidator, $fileStorage);
-        $uploadHandler->handleUpload();
-    } else {
-        echo json_encode(["message" => "Unknown API endpoint"]);
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($requestUri, '/api/upload') !== false) {
+    $controller = new UploadController();
+
+    $controller->upload();
 } else {
-    echo "test proxy";
+    echo json_encode(["error" => "Unknown API endpoint"]);
 }
