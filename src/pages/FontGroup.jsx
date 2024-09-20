@@ -13,7 +13,7 @@ const FontGroup = () => {
         handleDelete,
         handleEdit,
         handleEditSubmit,
-    } = useFontGroups();  // Use the hook to manage state and actions
+    } = useFontGroups();
 
     return (
         <div className="container mx-auto p-6">
@@ -24,7 +24,6 @@ const FontGroup = () => {
                 onDelete={handleDelete}
             />
 
-            {/* Modal for Editing Font Group */}
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <CreateGroup
                     editMode={true}

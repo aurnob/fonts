@@ -6,7 +6,6 @@ export const useFontGroups = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [groupToEdit, setGroupToEdit] = useState(null);
 
-    // Fetch all font groups
     const fetchFontGroups = () => {
         fetch('/api/font-groups')
             .then((response) => response.json())
@@ -18,7 +17,6 @@ export const useFontGroups = () => {
         fetchFontGroups();
     }, []);
 
-    // Handle Delete Font Group
     const handleDelete = (id) => {
         if (window.confirm("Are you sure you want to delete this font group?")) {
             fetch(`/api/font-groups/${id}`, {
@@ -37,13 +35,11 @@ export const useFontGroups = () => {
         }
     };
 
-    // Handle Edit Font Group
     const handleEdit = (group) => {
         setGroupToEdit(group);
         setIsModalOpen(true); // Open modal with the group data
     };
 
-    // Handle Form Submission for Editing
     const handleEditSubmit = (data) => {
         fetch(`/api/font-groups/${groupToEdit.id}`, {
             method: 'PUT',
