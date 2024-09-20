@@ -28,6 +28,6 @@ class DiskFileStorage
             throw new \Exception('Failed to upload the file.');
         }
 
-        return $filename; // Return the filename or path for reference
+        return $filename;
     }
 }

@@ -4,8 +4,7 @@ import Logo from './icons/logo'
 import { Link, useLocation } from 'react-router-dom';
 
 const navigation = [
-    { name: 'Dashboard', href: '/', current: true },
-    { name: 'Upload', href: '/upload', current: false },
+    { name: 'Upload', href: '/', current: false },
     { name: 'Font', href: '/font', current: false },
     { name: 'Create Group', href: '/create-group', current: false },
     { name: 'Font Group', href: '/font-group', current: false },
@@ -16,7 +15,7 @@ function classNames(...classes) {
 }
 
 const NavBar = () => {
-    const location = useLocation(); // Get current route location
+    const location = useLocation();
 
     return (
         <Disclosure as="nav" className="bg-gray-800">
@@ -34,8 +33,8 @@ const NavBar = () => {
                                         to={item.href}
                                         className={classNames(
                                             location.pathname === item.href
-                                                ? 'bg-gray-900 text-white' // Active link style
-                                                : 'text-gray-300 hover:bg-gray-700 hover:text-white', // Inactive link style
+                                                ? 'bg-gray-900 text-white'
+                                                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                             'rounded-md px-3 py-2 text-sm font-medium',
                                         )}
                                         aria-current={location.pathname === item.href ? 'page' : undefined}

@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 
 const headerTitles = {
-    '/': 'Dashboard',
+    '/': 'Upload',
     '/upload': 'Upload',
     '/font': 'Font',
     '/create-group': 'Create Group',

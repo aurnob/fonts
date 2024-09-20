@@ -1,81 +1,33 @@
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-
-import FormInput from '../components/form/FormInput';
 import UploadBox from '../components/form/UploadBox';
 import ProgressBar from '../components/form/ProgressBar';
 import { useFileUpload } from '../hooks/useFileUpload';
 
-const schema = z.object({
-    fontName: z.string().nonempty("Font name is required"),
-    fontPreview: z.string().nonempty("Font preview is required"),
-});
-
 const Upload = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        watch,
-        reset,
-        trigger,
-        clearErrors,
-    } = useForm({
-        resolver: zodResolver(schema),
+    const { progress, error, handleFileUpload, setError } = useFileUpload(() => {
+        document.getElementById("fileInput").value = ""; // Reset file input
     });
 
-    const { progress, error, handleFileUpload, setError } = useFileUpload(reset);
-
-    const fontName = watch("fontName");
-    const fontPreview = watch("fontPreview");
-
-    const onSubmit = (data) => {
-        const fileInput = document.getElementById("fileInput");
-        if (fileInput.files.length > 0) {
-            handleFileUpload(fileInput.files, data.fontName, data.fontPreview);
+    const handleFileSelect = (e) => {
+        const files = e.target.files;
+        if (files.length > 0) {
+            handleFileUpload(files);
         } else {
             setError("Please select a file to upload.");
         }
     };
 
-    const handleFileSelect = async (e) => {
-        if (fontName && fontPreview) {
-            handleFileUpload(e.target.files, fontName, fontPreview);
-        } else {
-            const isValid = await trigger();
-        }
-    };
-
-    const handleDrop = async (e) => {
+    const handleDrop = (e) => {
         e.preventDefault();
-        if (fontName && fontPreview) {
-            handleFileUpload(e.dataTransfer.files, fontName, fontPreview);
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFileUpload(files);
         } else {
-            const isValid = await trigger();
+            setError("Please drop a file to upload.");
         }
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <FormInput
-                label="Font Name"
-                register={register}
-                name="fontName"
-                errors={errors}
-                placeholder="Enter font name"
-                onFocus={() => clearErrors("fontName")}
-            />
-
-            <FormInput
-                label="Font Preview"
-                register={register}
-                name="fontPreview"
-                errors={errors}
-                placeholder="Enter font preview"
-                onFocus={() => clearErrors("fontPreview")}
-            />
-
+        <div className="space-y-4">
             <UploadBox
                 onDrop={handleDrop}
                 onClick={() => document.getElementById("fileInput").click()}
@@ -101,7 +53,7 @@ const Upload = () => {
             </div>
 
             {error && <p className="text-red-500">{error}</p>}
-        </form>
+        </div>
     );
 };
 

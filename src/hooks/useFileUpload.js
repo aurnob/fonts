@@ -5,13 +5,11 @@ export const useFileUpload = (reset) => {
     const [progress, setProgress] = useState({});
     const [error, setError] = useState("");
 
-    const handleFileUpload = (files, fontName, fontPreview) => {
+    const handleFileUpload = (files) => {
         [...files].forEach((file) => {
             if (file.type === "font/ttf" || file.name.endsWith(".ttf")) {
                 const formData = new FormData();
                 formData.append("file", file);
-                formData.append("fontName", fontName);
-                formData.append("fontPreview", fontPreview);
 
                 const xhr = new XMLHttpRequest();
 
@@ -55,7 +53,6 @@ export const useFileUpload = (reset) => {
     return {
         progress,
         error,
-        handleFileUpload,
-        setError,
+        handleFileUpload
     };
 };
