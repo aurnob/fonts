@@ -1,8 +1,29 @@
-# React + Vite
+## About This Repository
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository uses PHP, Javascript React library and Tailwind css frameworks to show the demo of an Font Group System.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
+
+First download this repository. Navigate to root of the project and then
+
+<pre>
+    <code>composer install</code>
+    <code>npm install</code>
+</pre>
+
+Copy the contents of .env.example to .env file. Fill up the database credentials(DB_HOST, DB_NAME, DB_USER, DB_PASS) according to your database.
+
+initiate your server by
+
+<pre>
+    <code>php -S localhost:8000 -t public</code>
+</pre>
+
+Then compile the assets and run development server on a new terminal by
+
+<pre>
+    <code>npm run dev</code>
+</pre>
+
+Finally browse [localhost:5173](http://localhost:5173) to run the system.

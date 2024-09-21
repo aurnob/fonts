@@ -48,25 +48,20 @@ class FontGroupController
     }
 
 
-    // Update function for editing an existing font group
-    // Function to update an existing font group
     public function updateFontGroup($groupId, $data)
     {
         $groupTitle = $data['groupTitle'] ?? null;
         $rows = $data['rows'] ?? [];
 
-        // Extract font names and font IDs from the rows
         $fontNames = array_map(fn($row) => $row['inputFontName'] ?? '', $rows);
         $fonts = array_map(fn($row) => $row['fontName'] ?? '', $rows);
 
-        // Validate input data
         if (empty($groupTitle) || count($fonts) < 2) {
             echo json_encode(['error' => 'You must provide a group title and select at least two fonts.']);
             return;
         }
 
         try {
-            // Update query for the font group
             $stmt = $this->db->prepare(
                 "UPDATE font_groups 
                 SET group_title = :groupTitle, font_names = :fontNames, fonts = :fonts, updated_at = NOW() 
@@ -79,7 +74,6 @@ class FontGroupController
                 ':groupId'    => $groupId,
             ]);
 
-            // Check if the update was successful
             echo json_encode(
                 $stmt->rowCount() > 0
                     ? ['success' => 'Font group updated successfully!']

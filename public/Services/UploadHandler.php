@@ -15,11 +15,9 @@ class UploadHandler
 
     public function handleUpload($file, $fontName, $fontPreview)
     {
-        // Step 1: Validate and store the uploaded file
         $uploadedFilePath = $this->storage->store($file);
 
         if ($uploadedFilePath) {
-            // Step 2: Save file and metadata to database
             $this->saveToDatabase($fontName, $fontPreview, $uploadedFilePath);
 
             return ["message" => "File uploaded successfully!"];
@@ -30,19 +28,15 @@ class UploadHandler
 
     private function saveToDatabase($fontName, $fontPreview, $filePath)
     {
-        // Get the PDO connection from DatabaseService
         $pdo = $this->dbService->getConnection();
 
-        // Prepare the SQL query to insert the file data into the 'fonts' table
         $query = "INSERT INTO fonts (file_path, created_at, updated_at)
                   VALUES (:filePath, NOW(), NOW())";
 
         $stmt = $pdo->prepare($query);
 
-        // Bind the values to the prepared statement
         $stmt->bindParam(':filePath', $filePath);
 
-        // Execute the query to insert the data
         $stmt->execute();
     }
 }
